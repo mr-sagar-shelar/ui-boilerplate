@@ -1,135 +1,159 @@
-# Turborepo starter
+# UI Boilerplate Documentation
 
-This Turborepo starter is maintained by the Turborepo core team.
+This repository is a Turborepo-based monorepo for developing and showcasing UI components and applications using React and Storybook.
 
-## Using this example
+## Project Overview
 
-Run the following command:
+This project is structured to support the development of reusable UI components and standalone applications.
 
-```sh
-npx create-turbo@latest
-```
+- **Monorepo:** Uses [Turborepo](https://turbo.build/repo) for managing the monorepo.
+- **UI Components:** Reusable React components are located in the `packages/ui` directory.
+- **Storybook:** [Storybook](https://storybook.js.org/) is used for developing, testing, and showcasing components and applications. The Storybook project is in `apps/storybook`.
+- **Styling:** The project is set up with basic CSS and is ready for a CSS-in-JS solution or a utility-first CSS framework like Tailwind CSS.
+- **TypeScript:** The entire codebase is written in TypeScript.
 
-## What's inside?
+## Getting Started
 
-This Turborepo includes the following packages/apps:
+1.  **Install Dependencies:**
+    ```sh
+    npm install
+    ```
+2.  **Run Storybook:**
+    ```sh
+    npm run dev
+    ```
+    This will start the Storybook development server.
 
-### Apps and Packages
+## Project Structure
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+The project is organized into two main directories: `packages` and `apps`.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+- **`packages/`**
+  - **`ui/`**: This is where all reusable UI components are located. Each component should have its own directory containing the component file and its CSS.
+    - `src/`
+      - `button/`
+        - `Button.tsx`
+        - `button.css`
+  - **`eslint-config/`**: Contains shared ESLint configurations.
+  - **`typescript-config/`**: Contains shared TypeScript configurations.
 
-### Utilities
+- **`apps/`**
+  - **`storybook/`**: The Storybook application for visualizing and testing components and applications.
+    - `src/`
+      - **`stories/`**: Storybook stories for the UI components.
+      - **`apps/`**: Contains standalone applications that can be rendered within Storybook.
+        - `BQ/`, `DQ/`, `GQ/`: Example applications. Each application has its own `App.tsx`, `index.css`, and `index.tsx` which exposes a `window.initialize<APPNAME>` function.
 
-This Turborepo has some additional tools already setup for you:
+## Development Workflow
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### Creating a New UI Component
 
-### Build
+1.  **Create a new directory** for your component inside `packages/ui/src/`. For example, `packages/ui/src/card`.
+2.  **Create the component file** (e.g., `Card.tsx`) and its CSS file (e.g., `card.css`).
+3.  **Define the component's props** and implement the component logic. Follow the example of `packages/ui/src/button/Button.tsx`.
 
-To build all apps and packages, run the following command:
+    ```tsx
+    // packages/ui/src/card/Card.tsx
+    import './card.css';
 
-```
-cd my-turborepo
+    export interface CardProps {
+      title: string;
+      children: React.ReactNode;
+    }
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+    export const Card = ({ title, children }: CardProps) => {
+      return (
+        <div className="card">
+          <h2>{title}</h2>
+          <div>{children}</div>
+        </div>
+      );
+    };
+    ```
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
+4.  **Export the component** from the main `ui` package entry point if you create one.
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+### Creating a Story for Your Component
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+1.  **Create a new story file** in `apps/storybook/src/stories/` with the `.stories.ts` extension (e.g., `Card.stories.ts`).
+2.  **Write stories** for the different states of your component. Follow the example of `apps/storybook/src/stories/Button.stories.ts`.
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+    ```ts
+    // apps/storybook/src/stories/Card.stories.ts
+    import type { Meta, StoryObj } from '@storybook/react-vite';
+    import { Card } from '@repo/ui/card/Card';
 
-### Develop
+    const meta = {
+      title: 'Example/Card',
+      component: Card,
+    } satisfies Meta<typeof Card>;
 
-To develop all apps and packages, run the following command:
+    export default meta;
+    type Story = StoryObj<typeof meta>;
 
-```
-cd my-turborepo
+    export const Default: Story = {
+      args: {
+        title: 'Example Card',
+        children: 'This is the content of the card.',
+      },
+    };
+    ```
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+### Creating a New Application
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+1.  **Create a new directory** for your application inside `apps/storybook/src/apps/` (e.g., `MyNewApp`).
+2.  **Create the following files** inside the new directory:
+    - `App.tsx`: The main component for your application.
+    - `index.css`: Styles for your application.
+    - `index.tsx`: The entry point for your application.
+3.  **Implement your application** in `App.tsx`.
+4.  **Set up the entry point** in `index.tsx` to expose a `window.initialize<AppName>` function. Replace `<AppName>` with the name of your application.
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+    ```tsx
+    // apps/storybook/src/apps/MyNewApp/index.tsx
+    import { StrictMode } from 'react';
+    import { createRoot } from 'react-dom/client';
+    import App from './App.tsx';
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+    declare global {
+      interface Window {
+        initializeMyNewApp: (mountId: string) => void;
+      }
+    }
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+    function initializeMyNewApp(mountId: string) {
+      if (mountId) {
+        createRoot(document.getElementById(mountId)!).render(
+          <StrictMode>
+            <App />
+          </StrictMode>,
+        );
+      }
+    }
 
-### Remote Caching
+    window.initializeMyNewApp = initializeMyNewApp;
+    ```
+5. You can test your new application by adding a new HTML file in `apps/storybook/public` and mounting your app there.
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+---
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## Instructions for Devin AI
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+As an AI developer, your task is to create UI components based on Figma designs. Follow these steps:
 
-```
-cd my-turborepo
+1.  **Component Implementation:**
+    *   Create a new directory for the component in `packages/ui/src/`.
+    *   Create the `Component.tsx` and `component.css` files.
+    *   Translate the Figma design into a React component with TypeScript props.
+    *   Ensure the component is fully functional and styled according to the design.
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
+2.  **Storybook Story:**
+    *   Create a `.stories.ts` file for the component in `apps/storybook/src/stories/`.
+    *   Add stories for all variants and states of the component as shown in the Figma design.
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
+3.  **Follow Conventions:**
+    *   Adhere to the existing code style and structure.
+    *   Use the same naming conventions as in the rest of the project.
+    *   Ensure all code is typed with TypeScript.
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+Your goal is to produce a complete, production-ready UI component with corresponding Storybook stories.
