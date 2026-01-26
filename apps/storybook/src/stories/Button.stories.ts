@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { fn } from 'storybook/test';
+import { expect, fn, userEvent, within } from 'storybook/test';
 
 import { Button } from '@repo/ui/button/Button';
 
@@ -54,5 +54,25 @@ export const Small: Story = {
   args: {
     size: 'small',
     label: 'Button',
+  },
+};
+
+export const WithInteraction: Story = {
+  args: {
+    label: 'Click me!',
+    size: 'small',
+    // onClick: () => alert('Button clicked!'),
+  },
+  play: async ({ canvasElement }) => {
+    // Mock the alert function
+    window.alert = fn();
+
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button');
+
+    await userEvent.click(button);
+
+    // Assert that alert was called
+    expect(window.alert).toHaveBeenCalledWith('button click');
   },
 };
