@@ -1,0 +1,14 @@
+{
+  "extends": "@repo/typescript-config/react-library.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "src",
+    "../../apps/storybook/src/stories/Button.stories.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
