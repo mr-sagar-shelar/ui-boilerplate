@@ -20,15 +20,17 @@ export const handlers = [
 
 const worker = setupWorker(...handlers)
 
-beforeAll(async () => {
-  await worker.start();
-});
-afterEach(async () => {
-  await worker.resetHandlers();
-});
-afterAll(async () => {
-  await worker.stop();
-});
+if (import.meta.env.VITE_ENABLE_MOCK === 'true') {
+  beforeAll(async () => {
+    await worker.start();
+  });
+  afterEach(async () => {
+    await worker.resetHandlers();
+  });
+  afterAll(async () => {
+    await worker.stop();
+  });
+}
 
 const createWrapper = () => {
   const queryClient = new QueryClient({

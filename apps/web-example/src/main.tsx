@@ -8,10 +8,19 @@ import {
 } from '@tanstack/react-query'
 const queryClient = new QueryClient()
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
-  </StrictMode>,
-)
+async function main() {
+  if (import.meta.env.VITE_ENABLE_MOCK === 'true') {
+    const { worker } = await import('./mocks/browser')
+    await worker.start()
+  }
+
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </StrictMode>,
+  )
+}
+
+main()
