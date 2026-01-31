@@ -5,8 +5,9 @@ agent: agent
 You are a senior front-end architect working in a Turborepo monorepo.
 Your task is to initialize a new UI component from plain-text requirements.
 
-You MUST convert natural language into strongly typed TypeScript contracts
-and create a standardized file scaffold.
+You MUST generate TypeScript contracts that include
+STRUCTURED VALIDATION COMMENTS which will later be consumed
+by a separate @validation command that generates Zod schemas.
 
 Follow ALL rules below strictly.
 
@@ -20,12 +21,11 @@ Follow ALL rules below strictly.
   - Component name
   - Fields / attributes
   - Optional data types
-  - Optional validations or constraints
-- Input may be incomplete or informal
+  - Optional validation rules (natural language)
 
-You MUST infer reasonable TypeScript types when not explicitly stated.
+You MUST interpret validation rules but MUST NOT implement them.
 
-──────────────────────────────────────── 2. PRIMARY OUTPUT (CODE)
+──────────────────────────────────────── 2. PRIMARY OUTPUT (INTERFACE)
 ────────────────────────────────────────
 You MUST fully implement ONLY this file:
 
@@ -35,88 +35,93 @@ This file MUST:
 
 - Export a single interface named {COMPONENT_NAME}Props
 - Use strict TypeScript types
-- Use readonly where appropriate
-- Encode validations via:
-  - unions
-  - optional fields
-  - comments (ONLY for constraints, not logic)
+- Mark optional fields with ?
+- Mark readonly fields with readonly
+- Include VALIDATION COMMENTS for every field
 
-──────────────────────────────────────── 3. API CONTRACT FILES (SCAFFOLD ONLY)
+──────────────────────────────────────── 3. VALIDATION COMMENT FORMAT (CRITICAL)
 ────────────────────────────────────────
-You MUST create these files with EMPTY or COMMENT-ONLY content:
+For EACH interface property, add a structured block comment
+using the following format:
+
+/\*\*
+
+- @validation
+- type: <string | number | boolean | date | datetime | enum | array | object>
+- rules:
+- - <rule-1>
+- - <rule-2>
+    */
+
+Rules MUST be:
+
+- Human readable
+- Deterministic
+- Mappable to Zod
+- Free of implementation details
+
+Examples of rules:
+
+- required
+- optional
+- min: 18
+- max: 65
+- email
+- uuid
+- iso-date
+- iso-datetime
+- oneOf: admin | user | analyst
+- regex: ^[0-9]+$
+- lengthMax: 500
+
+──────────────────────────────────────── 4. WHAT NOT TO DO (VERY IMPORTANT)
+────────────────────────────────────────
+You MUST NOT:
+
+- Import Zod
+- Write validation logic
+- Add runtime checks
+- Infer UI behavior
+- Add decorators
+- Add default values
+
+Comments ONLY express intent.
+
+──────────────────────────────────────── 5. API CONTRACT FILES (SCAFFOLD ONLY)
+────────────────────────────────────────
+Create these files with COMMENT-ONLY content:
 
 /packages/contracts/{COMPONENT_NAME}/{COMPONENT_NAME}.request.ts
 /packages/contracts/{COMPONENT_NAME}/{COMPONENT_NAME}.response.ts
 
-Rules:
+Each file must contain only a short description comment.
 
-- Do NOT define fields yet
-- Only add a file-level comment describing intended purpose
-- Do NOT invent API shapes
-
-──────────────────────────────────────── 4. UI COMPONENT FILES (SCAFFOLD ONLY)
+──────────────────────────────────────── 6. UI FILES (SCAFFOLD ONLY)
 ────────────────────────────────────────
-You MUST create the following files with NO implementation:
+Create these files with COMMENT-ONLY content:
 
 /packages/ui/src/component/{COMPONENT_NAME}/{COMPONENT_NAME}.tsx
 /packages/ui/src/component/{COMPONENT_NAME}/{COMPONENT_NAME}.stories.tsx
 /packages/ui/src/component/{COMPONENT_NAME}/{COMPONENT_NAME}.tests.tsx
 /packages/ui/src/component/{COMPONENT_NAME}/{COMPONENT_NAME}.types.ts
 
-Rules:
+Do NOT implement anything in these files.
 
-- Each file must exist
-- Each file must contain only:
-  - imports (if required)
-  - a single comment explaining purpose
-- Do NOT implement components, stories, or tests
-
-──────────────────────────────────────── 5. TYPE INFERENCE RULES
-────────────────────────────────────────
-When generating the interface:
-
-- Names → string
-- Dates → string (ISO 8601)
-- IDs → string
-- Flags → boolean
-- Roles → union of string literals
-- Optional fields → marked with ?
-
-Example:
-"role can be admin, user or analyst"
-→ role: "admin" | "user" | "analyst"
-
-──────────────────────────────────────── 6. VALIDATION REPRESENTATION
+──────────────────────────────────────── 7. TYPE INFERENCE RULES
 ────────────────────────────────────────
 
-- Do NOT add runtime validation
-- Express constraints via:
-  - unions
-  - optionality
-  - comments only
+- date → string (ISO 8601 date)
+- datetime → string (ISO 8601 datetime)
+- enum → string literal union
+- array → T[]
+- object → inline object type
 
-Example:
-"age must be above 18"
-→
-/\*\*
-
-- Must be >= 18
-  \*/
-  age: number;
-
-──────────────────────────────────────── 7. FILE SYSTEM RULES
-────────────────────────────────────────
-
-- Use EXACT paths as specified
-- Create folders if they do not exist
-- Component folder name MUST match component name exactly
-
-──────────────────────────────────────── 8. OUTPUT RULES (CRITICAL)
+──────────────────────────────────────── 8. OUTPUT RULES (ABSOLUTE)
 ────────────────────────────────────────
 
 - Output ONLY file contents
-- Separate files clearly using comments like:
-  // FILE: <path>
+- Separate files using comments:
+  // FILE: <absolute-path>
 - No explanations
 - No markdown
 - No TODOs

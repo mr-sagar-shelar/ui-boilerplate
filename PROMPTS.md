@@ -1,6 +1,6 @@
 # Example Prompts
 
-## @init-component
+## @init-component example 1
 
 Create a component named "UserProfile".
 
@@ -83,3 +83,36 @@ The component accepts the following data:
 
 - showAdvancedSection: boolean
 - layoutVariant: enum, compact or expanded
+
+## @init-component example 2
+
+Create component named "UserProfile".
+
+Fields:
+
+- userId: string, required, must be uuid
+- firstName: string, required
+- lastName: string, required
+- email: string, must be valid email
+- dateOfBirth: date, must be past date
+- age: number, minimum 18
+- role: enum, admin | analyst | user
+- phoneNumber: optional string, digits only
+- isActive: boolean
+- createdAt: datetime, required
+
+## @validation example
+
+Generate Zod validation schema for component "UserProfile"
+using the interface defined in:
+
+/packages/contracts/interfaces/UserProfile.ts
+
+Requirements:
+
+- Read validation rules ONLY from @validation comments
+- Implement nested object validations
+- Implement array item validations
+- Implement cross-field validations if present
+- Generate form-level schema suitable for UI forms
+- Follow standard error message conventions

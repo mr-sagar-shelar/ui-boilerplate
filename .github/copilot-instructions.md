@@ -3,6 +3,7 @@
 ## Architecture Overview
 
 **Monorepo Structure:** Turborepo-based monorepo with npm workspaces. Two main categories:
+
 - `packages/`: Reusable libraries and shared configs (ui components, contracts, hooks, store, utils, eslint-config, typescript-config)
 - `apps/`: Applications that consume packages (storybook for component development, e2e for testing)
 
@@ -10,21 +11,23 @@
 
 ## Critical Build & Development Commands
 
-| Task | Command | Notes |
-|------|---------|-------|
-| Development | `npm run dev` | Starts Storybook + watches all packages (from root) |
-| Build all | `npm run build` | Builds all packages with Turbo caching |
-| Type check | `npm run check-types` | TypeScript validation across monorepo |
-| Lint | `npm run lint` | ESLint across all packages |
-| Format | `npm run format` | Prettier formatting for `.ts`, `.tsx`, `.md` |
-| Generate component | `npm run generate:component` | Turbo generator for new UI components |
+| Task               | Command                      | Notes                                               |
+| ------------------ | ---------------------------- | --------------------------------------------------- |
+| Development        | `npm run dev`                | Starts Storybook + watches all packages (from root) |
+| Build all          | `npm run build`              | Builds all packages with Turbo caching              |
+| Type check         | `npm run check-types`        | TypeScript validation across monorepo               |
+| Lint               | `npm run lint`               | ESLint across all packages                          |
+| Format             | `npm run format`             | Prettier formatting for `.ts`, `.tsx`, `.md`        |
+| Generate component | `npm run generate:component` | Turbo generator for new UI components               |
 
 Turbo caches outputs (`build`, `lint`, `check-types`). Use `turbo run <task> --no-cache` to force rebuild.
 
 ## Project-Specific Patterns
 
 ### UI Component Pattern
+
 All components live in `packages/ui/src/<component-name>/`:
+
 ```
 packages/ui/src/button/
 ├── Button.tsx          # Component with exported interface Props
@@ -32,12 +35,13 @@ packages/ui/src/button/
 ```
 
 **Props Pattern:** Every component exports a `ComponentNameProps` interface with JSDoc comments:
+
 ```tsx
 export interface ButtonProps {
   /** Primary action? */
   primary?: boolean;
   /** Size variant */
-  size?: 'small' | 'medium' | 'large';
+  size?: "small" | "medium" | "large";
   label: string;
   onClick?: () => void;
 }
@@ -48,31 +52,37 @@ export interface ButtonProps {
 **Exports:** `packages/ui/package.json` exports via `"./*": "./src/*.tsx"` pattern, enabling imports like `@repo/ui/button/Button`.
 
 ### Stories Pattern (Storybook)
+
 Stories in `apps/storybook/src/stories/`:
+
 ```tsx
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, userEvent, within } from 'storybook/test';
-import { Button } from '@repo/ui/button/Button';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn, userEvent, within } from "storybook/test";
+import { Button } from "@repo/ui/button/Button";
 
 const meta = {
-  title: 'Example/Button',
+  title: "Example/Button",
   component: Button,
-  tags: ['autodocs'],  // Auto-generate docs from component props
-  args: { onClick: fn() },  // Spy on actions
+  tags: ["autodocs"], // Auto-generate docs from component props
+  args: { onClick: fn() }, // Spy on actions
 } satisfies Meta<typeof Button>;
 ```
 
 **Key:** Use `fn()` for event handlers to track calls in Actions panel. Add Figma design URLs in parameters.
 
 ### Contracts/Types Layer
+
 `packages/contracts/` holds shared TypeScript interfaces:
+
 - `common/`: Pagination, shared types across all apps
 - `GQ/`, `DQ/`, `BQ/`: App-specific request/response/context types (prepare for API integration)
 
 Currently mostly empty; follow naming: `GQApiRequest.ts`, `GQApiResponse.ts`, `GQContext.ts`.
 
 ### App Initialization Pattern
+
 Embedded apps in Storybook (`src/apps/GQ/`, `BQ/`, `DQ/`) expose `window.initialize<APPNAME>` functions. Each app:
+
 - Has `App.tsx` as root component
 - Has `index.tsx` exporting initialization function
 - Has `index.css` for app-level styles
@@ -90,6 +100,7 @@ Build script: `for app_dir in src/apps/*/; do export VITE_APP_NAME=$(basename $a
 ## Development Workflow for Common Tasks
 
 **Adding a UI Component:**
+
 1. Create `packages/ui/src/<component>/Component.tsx` with exported Props interface
 2. Add `packages/ui/src/<component>/component.css`
 3. Export from `packages/ui/package.json` via `"./*": "./src/*.tsx"`
@@ -97,12 +108,14 @@ Build script: `for app_dir in src/apps/*/; do export VITE_APP_NAME=$(basename $a
 5. Run `npm run dev` to see in Storybook
 
 **Adding a New App:**
+
 1. Create `apps/storybook/src/apps/<AppName>/App.tsx`
 2. Create `index.tsx` exporting `window.initialize<AppName>` function
 3. Add `index.css` for styles
 4. Update `build:apps` script if special handling needed
 
 **Type Integration:**
+
 - Add shared types to `packages/contracts/common/` for cross-app usage
 - Add app-specific types to `packages/contracts/<AppName>/`
 - Import in components/apps via `import type { Type } from '@repo/contracts'` (export needed)
