@@ -5,6 +5,7 @@ import { http, HttpResponse } from 'msw'
 import { setupWorker } from 'msw/browser'
 import ApiExample from './ApiExample'
 import { page } from 'vitest/browser'
+import { USE_MOCK_API } from "@repo/config/env";
 
 export const handlers = [
   http.get('https://api.github.com/repos/TanStack/query', () => {
@@ -20,7 +21,7 @@ export const handlers = [
 
 const worker = setupWorker(...handlers)
 
-if (import.meta.env.VITE_ENABLE_MOCK === 'true') {
+if (USE_MOCK_API) {
   beforeAll(async () => {
     await worker.start();
   });
