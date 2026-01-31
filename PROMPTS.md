@@ -229,6 +229,21 @@ The mock data must:
 - Be reusable across unit and E2E tests
 - Be defined in a single file
 
+## Handler Example
+
+Generate API handlers for component "UserProfile".
+
+Use mock data from:
+
+- /packages/ui/src/component/UserProfile/UserProfile.mock-data.ts
+
+Handlers must:
+
+- Support positive, negative, empty, and edge cases
+- Be reusable by unit tests and E2E tests
+- Use MSW
+- Match REST semantics
+
 ## Unit Test Example
 
 Write comprehensive unit tests for the "UserProfileForm" component.
