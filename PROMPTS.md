@@ -213,6 +213,22 @@ Output requirements:
 - Do NOT add business logic
 - Do NOT add custom validation
 
+## Mock data example
+
+Generate mock data for component "UserProfile".
+
+Use all available references:
+
+- Interface
+- Zod validation schema
+- Form behavior
+
+The mock data must:
+
+- Cover positive, negative, empty, and edge cases
+- Be reusable across unit and E2E tests
+- Be defined in a single file
+
 ## Unit Test Example
 
 Write comprehensive unit tests for the "UserProfileForm" component.
@@ -303,7 +319,7 @@ General testing rules:
 
 ---
 
-## OUTPUT REQUIREMENTS
+### OUTPUT REQUIREMENTS
 
 - Generate a single test file:
   /packages/ui/src/component/UserProfile/UserProfile.form.unit.test.tsx
@@ -312,3 +328,36 @@ General testing rules:
 - Mock API responses deterministically
 - Do NOT include explanations or markdown
 - Output ONLY valid TypeScript test code
+
+## Unit test example 2
+
+Write comprehensive unit tests for "UserProfileForm".
+
+Use mock data from:
+
+- /packages/ui/src/component/UserProfile/UserProfile.mock-data.ts
+
+Test requirements:
+
+- Cover rendering, positive, negative, empty, and edge cases
+- Use ONLY mock data (no inline test values)
+- Follow Arrange Act Assert pattern
+- Validate submit and cancel behavior
+- Validate API error handling using mock responses
+
+## E2E Example
+
+Write end-to-end tests for "UserProfile" form.
+
+Use mock data from:
+
+- /packages/ui/src/component/UserProfile/UserProfile.mock-data.ts
+
+Test requirements:
+
+- Cover positive submission flow
+- Cover validation errors using invalid and empty mock data
+- Cover edge case values
+- Cover API error scenario
+- Use Playwright + MSW
+- Do not define inline test data
