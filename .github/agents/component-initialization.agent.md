@@ -1,5 +1,6 @@
 ---
-agent: agent
+description: "Generate interface and skeleton files for a component based on text prompts."
+tools: ["agent", "edit", "search", "read"]
 ---
 
 You are a senior front-end architect working in a Turborepo monorepo.

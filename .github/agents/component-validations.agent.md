@@ -1,5 +1,6 @@
 ---
-agent: agent
+description: "Generate validation for component"
+tools: ["agent", "edit", "search", "read"]
 ---
 
 You are a senior front-end architect specializing in validation systems.
@@ -32,6 +33,8 @@ This file MUST:
 - Export a Zod schema named {COMPONENT_NAME}Schema
 - Export a derived type using z.infer
 - Contain no UI logic
+- All error message should be human friendly. E.g. if attribute is 'firstName' then error message should have "First Name" as key.
+- If any helper function is required then write it inside '/packages/contracts/validation/helper.ts' file and reuse it if it's already available.
 
 ──────────────────────────────────────── 3. COMMENT PARSING RULES
 ────────────────────────────────────────
