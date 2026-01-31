@@ -12,6 +12,8 @@ The form MUST be generated strictly from:
 - The component TypeScript interface
 - The Zod schema produced by the @validation command
 - An existing API contract (request/response)
+- No variable should have implicit 'any' type
+- Each UI component should have unique ids so that it could be used for unit and end to end testing.
 
 Follow ALL rules below strictly.
 

@@ -212,3 +212,103 @@ Output requirements:
 - Do NOT modify or generate any other files
 - Do NOT add business logic
 - Do NOT add custom validation
+
+## Unit Test Example
+
+Write comprehensive unit tests for the "UserProfileForm" component.
+
+Scope:
+
+- This is a UNIT test, not integration or E2E.
+- Test only the UserProfileForm component in isolation.
+- Do not test API implementation or backend logic.
+- Use MSW for mocking API responses.
+
+Sources of truth:
+
+1. Component interface:
+   /packages/contracts/interfaces/UserProfile.ts
+
+2. Zod validation schema:
+   /packages/contracts/validation/UserProfile.schema.ts
+
+3. Form component:
+   /packages/ui/src/component/UserProfile/UserProfile.form.tsx
+
+Testing framework & tools:
+
+- Vitest
+- React Testing Library
+- jsdom environment
+- MSW for API mocks
+
+General testing rules:
+
+- Follow Arrange → Act → Assert pattern in every test
+- One behavior per test case
+- Use accessible queries only (getByRole, getByLabelText, getByPlaceholderText)
+- Do NOT use class selectors or implementation details
+- Do NOT use snapshot testing
+- Do NOT use arbitrary timeouts
+
+---
+
+### TEST CASES TO COVER
+
+1. Rendering & Initial State (Positive)
+
+- The form renders without crashing
+- All required fields are visible
+- Submit button is disabled initially
+- Cancel button is enabled initially
+
+2. Positive Validation Scenarios
+
+- Filling all required fields with valid values enables the submit button
+- Valid enum selections are accepted
+- Valid date values are accepted
+- Submit triggers API call with correct payload
+
+3. Negative Validation Scenarios
+
+- Submitting empty form shows validation errors
+- Invalid email format shows correct error message
+- Age below minimum value shows validation error
+- Required fields display errors when left empty
+
+4. Empty & Edge Cases
+
+- Optional fields can be left empty without errors
+- Form remains invalid when only some required fields are filled
+- Submit button remains disabled when form is invalid
+
+5. API Interaction (Mocked)
+
+- Submit button is disabled immediately after clicking submit
+- API success response re-enables submit button
+- API failure response shows error message below action buttons
+- API error does NOT clear form values
+
+6. Cancel Action
+
+- Clicking cancel calls onCancel callback
+- Cancel does not trigger validation
+- Cancel does not trigger API call
+
+7. Accessibility & UX
+
+- All fields have accessible labels
+- Error messages are visible and readable
+- Buttons have correct type attributes
+
+---
+
+## OUTPUT REQUIREMENTS
+
+- Generate a single test file:
+  /packages/ui/src/component/UserProfile/UserProfile.form.unit.test.tsx
+- Use clear test descriptions
+- Use Arrange / Act / Assert comments in each test
+- Mock API responses deterministically
+- Do NOT include explanations or markdown
+- Output ONLY valid TypeScript test code

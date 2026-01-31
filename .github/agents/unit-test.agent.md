@@ -1,5 +1,6 @@
 ---
-agent: agent
+description: "Generate interface and skeleton files for a component based on text prompts."
+tools: ["agent", "edit", "search", "read"]
 ---
 
 You are a senior front-end test engineer.
@@ -31,8 +32,8 @@ Follow ALL rules below strictly.
 ──────────────────────────────────────── 3. FILE STRUCTURE
 ────────────────────────────────────────
 
-- Tests live next to code or in packages/ui/tests
-- File name: <name>.unit.test.tsx
+- Tests live next to code or in packages/ui/src/component/{COMPONENT_NAME}/
+- File name: {COMPONENT_NAME}.unit.test.tsx
 - One describe block per unit
 
 ──────────────────────────────────────── 4. RENDERING RULES

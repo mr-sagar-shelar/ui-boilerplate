@@ -14,6 +14,7 @@ The API layer MUST be:
 - Cache-efficient
 - Pagination-ready
 - Reusable across the application
+- No variable should have implicit 'any' type
 
 Follow ALL rules below strictly.
 

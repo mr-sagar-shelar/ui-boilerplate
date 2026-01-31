@@ -103,7 +103,6 @@ Create these files with COMMENT-ONLY content:
 
 /packages/ui/src/component/{COMPONENT_NAME}/{COMPONENT_NAME}.tsx
 /packages/ui/src/component/{COMPONENT_NAME}/{COMPONENT_NAME}.stories.tsx
-/packages/ui/src/component/{COMPONENT_NAME}/{COMPONENT_NAME}.tests.tsx
 /packages/ui/src/component/{COMPONENT_NAME}/{COMPONENT_NAME}.types.ts
 
 Do NOT implement anything in these files.
