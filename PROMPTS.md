@@ -458,3 +458,19 @@ Tests must:
 - Cover positive, negative, empty, and edge scenarios
 - Validate edit / submit orchestration
 - Use USE_MOCK_API flag to control mocking
+
+## @component-develop example
+
+Generate UI component for "PersonalInfo".
+
+Use interface from:
+
+- /packages/contracts/interfaces/PersonalInfo.ts
+
+Component requirements:
+
+- Render all fields defined in interface
+- Support readonly and editable modes
+- Emit onChange and onValidityChange events
+- Use Material UI
+- Responsive layout

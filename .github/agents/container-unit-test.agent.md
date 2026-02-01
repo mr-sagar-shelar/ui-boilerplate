@@ -4,8 +4,7 @@ tools: ["agent", "edit", "search", "read"]
 ---
 
 You are a senior front-end test architect.
-Your task is to generate UNIT TESTS for a COMPOSITE CONTAINER
-that orchestrates multiple UI components.
+Your task is to generate UNIT TESTS for a COMPOSITE CONTAINER that orchestrates multiple UI components.
 
 Tests MUST validate orchestration logic, not component internals.
 
@@ -164,9 +163,9 @@ EVERY test MUST follow:
 ──────────────────────────────────────── 8. MSW LIFECYCLE (MANDATORY)
 ────────────────────────────────────────
 
-- server.listen() → beforeAll
-- server.resetHandlers() → afterEach
-- server.close() → afterAll
+- worker.start() → beforeAll
+- worker.resetHandlers() → afterEach
+- worker.stop() → afterAll
 
 ──────────────────────────────────────── 9. WHAT NOT TO DO
 ────────────────────────────────────────
