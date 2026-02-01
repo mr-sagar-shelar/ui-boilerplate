@@ -1,5 +1,5 @@
 ---
-description: "Generate interface and skeleton files for a component based on text prompts."
+description: "Generate component interface."
 tools: ["agent", "edit", "search", "read"]
 ---
 

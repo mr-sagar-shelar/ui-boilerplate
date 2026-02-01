@@ -31,7 +31,7 @@ Figma UX
 
 ---
 
-## 1️⃣ Create Component Contract – @init-component
+## 1️⃣ Create Component Interface
 
 Defines the data structure for a UI component.
 
@@ -42,97 +42,30 @@ Defines the data structure for a UI component.
 
 <details>
 
-<summary>Example @init-component for UserProfile</summary>
+<summary>Example `component-interface` for UserProfile</summary>
 
 ```markdown
-Create a component named "UserProfile".
+Create component named "UserProfile".
 
-The component accepts the following data:
+Fields:
 
-1. User identifiers
-
-- userId: unique identifier, string, required
-- externalRefId: optional identifier, string
-
-2. Personal information
-
+- userId: string, required, must be uuid
 - firstName: string, required
 - lastName: string, required
-- middleName: optional string
-- fullName: derived display value, string, readonly
-- dateOfBirth: date, must be a valid past date
-- age: number, must be greater than or equal to 18
-
-3. Contact details
-
-- email: string, must be a valid email format
-- phoneNumber: string, optional, digits only
-- isEmailVerified: boolean
-- isPhoneVerified: boolean
-
-4. Address information
-
-- address: object
-  - streetLine1: string
-  - streetLine2: optional string
-  - city: string
-  - state: string
-  - postalCode: string
-  - country: string (ISO 2-letter country code)
-
-5. Role and access
-
-- role: enum, allowed values are admin, analyst, user, guest
-- permissions: array of strings
+- email: string, must be valid email
+- dateOfBirth: date, must be past date
+- age: number, minimum 18
+- role: enum, admin | analyst | user
+- phoneNumber: optional string, digits only
 - isActive: boolean
-- accountStatus: enum, one of ACTIVE, SUSPENDED, DELETED
-
-6. Preferences
-
-- preferredLanguage: enum, one of en, fr, de, es
-- preferredTheme: enum, light or dark
-- notificationChannels: array, allowed values email, sms, push
-
-7. Financial information
-
-- annualIncome: number, must be greater than 0
-- creditScore: number, range between 300 and 900
-- isKycCompleted: boolean
-
-8. Dates and audit fields
-
-- createdAt: datetime, ISO 8601 string
-- updatedAt: datetime, ISO 8601 string
-- lastLoginAt: optional datetime
-
-9. Flags and toggles
-
-- isReadonly: boolean
-- isEditable: boolean
-
-10. Metadata
-
-- tags: array of strings
-- notes: optional string, max length 500 characters
-
-11. Nested collections
-
-- dependents: array of objects
-  - name: string
-  - relationship: enum, spouse or child
-  - dateOfBirth: date
-
-12. UI-specific behavior hints
-
-- showAdvancedSection: boolean
-- layoutVariant: enum, compact or expanded
+- createdAt: datetime, required
 ```
 
 </details>
 
 ---
 
-## 2️⃣ Add Validation – @validation
+## 2️⃣ Create component validations
 
 Generates Zod schema from interface comments.
 
@@ -140,9 +73,31 @@ Generates Zod schema from interface comments.
 
 - /packages/contracts/validation/{Component}.schema.ts
 
+<details>
+
+<summary>Example `component-validations` for UserProfile</summary>
+
+```markdown
+Generate Zod validation schema for component "UserProfile"
+using the interface defined in:
+
+/packages/contracts/interfaces/UserProfile.ts
+
+Requirements:
+
+- Read validation rules ONLY from @validation comments
+- Implement nested object validations
+- Implement array item validations
+- Implement cross-field validations if present
+- Generate form-level schema suitable for UI forms
+- Follow standard error message conventions
+```
+
+</details>
+
 ---
 
-## 3️⃣ Develop UI Component – @component-develop
+## 3️⃣ Develop UI Component
 
 Creates a pure MUI-based component supporting readonly/editable modes.
 
@@ -150,19 +105,63 @@ Creates a pure MUI-based component supporting readonly/editable modes.
 
 - /packages/ui/src/component/{Component}/{Component}.tsx
 
+<details>
+
+<summary>Example `component-develop` for UserProfile</summary>
+
+```markdown
+Generate UI component for "PersonalInfo".
+
+Use interface from:
+
+- /packages/contracts/interfaces/PersonalInfo.ts
+
+Component requirements:
+
+- Render all fields defined in interface
+- Support readonly and editable modes
+- Emit onChange and onValidityChange events
+- Use Material UI
+- Responsive layout
+```
+
+</details>
+
 ---
 
-## 4️⃣ Generate Mock Data – @mock
+## 4️⃣ Generate Component Mock Data
 
-Creates canonical mock data for all scenarios.
+Creates canonical mock data for all scenarios of a component.
 
 **Output**
 
 - /packages/ui/src/component/{Component}/{Component}.mock-data.ts
 
+<details>
+
+<summary>Example `component-mock-data` for UserProfile</summary>
+
+```markdown
+Generate mock data for component "UserProfile".
+
+Use all available references:
+
+- Interface
+- Zod validation schema
+- Form behavior
+
+The mock data must:
+
+- Cover positive, negative, empty, and edge cases
+- Be reusable across unit and E2E tests
+- Be defined in a single file
+```
+
+</details>
+
 ---
 
-## 5️⃣ Generate Mock Handlers – @handler
+## 5️⃣ Generate Component Handlers
 
 Creates MSW handlers for mock scenarios.
 
@@ -170,9 +169,30 @@ Creates MSW handlers for mock scenarios.
 
 - /packages/ui/src/component/{Component}/{Component}.handlers.ts
 
+<details>
+
+<summary>Example `component-handlers` for UserProfile</summary>
+
+```markdown
+Generate API handlers for component "UserProfile".
+
+Use mock data from:
+
+- /packages/ui/src/component/UserProfile/UserProfile.mock-data.ts
+
+Handlers must:
+
+- Support positive, negative, empty, and edge cases
+- Be reusable by unit tests and E2E tests
+- Use MSW
+- Match REST semantics
+```
+
+</details>
+
 ---
 
-## 6️⃣ Create Storybook Stories – @story
+## 6️⃣ Create Component Stories
 
 Visualizes all component states using mock data.
 
@@ -180,9 +200,31 @@ Visualizes all component states using mock data.
 
 - /packages/ui/src/component/{Component}/{Component}.stories.ts
 
+<details>
+
+<summary>Example `component-strories` for UserProfile</summary>
+
+```markdown
+Generate Storybook stories for component "UserProfile".
+
+Use:
+
+- Props interface from /packages/contracts/interfaces/UserProfile.ts
+- Mock data from /packages/ui/src/component/UserProfile/UserProfile.mock-data.ts
+
+Story requirements:
+
+- Create stories for valid, invalid, empty, and edge cases
+- Pass all props via args
+- Expose all props in Storybook Controls
+- Use mock data as default args
+```
+
+</details>
+
 ---
 
-## 7️⃣ Create API Hooks – @API
+## 7️⃣ Create API Hooks
 
 Generates TanStack Query hooks with caching & pagination.
 
@@ -190,9 +232,39 @@ Generates TanStack Query hooks with caching & pagination.
 
 - /packages/api/{Component}/{Component}.api.ts
 
+<details>
+
+<summary>Example `component-api` for UserProfile</summary>
+
+```markdown
+Create API hooks for component "UserProfile".
+
+Use:
+
+- Interface from /packages/contracts/interfaces/UserProfile.ts
+- Zod schema from /packages/contracts/validation/UserProfile.schema.ts
+
+API endpoints:
+
+- GET /api/user-profile
+- GET /api/user-profile/{id}
+- POST /api/user-profile
+- PUT /api/user-profile/{id}
+- DELETE /api/user-profile/{id}
+
+Requirements:
+
+- Enable pagination for GET list
+- Use shared pagination config
+- Cache responses in memory for 1 minute
+- Invalidate list and detail queries on mutation
+```
+
+</details>
+
 ---
 
-## 8️⃣ Build Container – @container
+## 8️⃣ Build Container
 
 Orchestrates multiple components, state, edit flow, and submission.
 
@@ -202,23 +274,134 @@ Orchestrates multiple components, state, edit flow, and submission.
 - /packages/ui/{Container}/{Container}.store.ts
 - /packages/ui/{Container}/{Container}.api.ts
 
+<details>
+
+<summary>Example `container` for UserProfile</summary>
+
+```markdown
+Create container named "UserProfileContainer"
+using the following components:
+
+- PersonalInfo
+- AddressInfo
+- Preferences
+
+The container must:
+
+- Fetch data for all components
+- Coordinate edit / submit flow
+- Maintain component-level state and validity
+- Prevent unnecessary re-renders
+```
+
+</details>
+
 ---
 
-## 9️⃣ Component Unit Tests – @unit
+## 9️⃣ Component Unit Tests
 
 Tests component behavior using mock data and handlers.
 
+<details>
+
+<summary>Example `component-unit-test` for UserProfile</summary>
+
+```markdown
+Write comprehensive unit tests for the "UserProfile" component.
+
+Scope:
+
+- This is a UNIT test, not integration or E2E.
+- Test only the UserProfile component in isolation.
+- Do not test API implementation or backend logic.
+- Use MSW for mocking API responses.
+
+Sources of truth:
+
+1. Component interface:
+   /packages/contracts/interfaces/UserProfile.ts
+
+2. Zod validation schema:
+   /packages/contracts/validation/UserProfile.schema.ts
+
+3. Form component:
+   /packages/ui/src/component/UserProfile/UserProfile.form.tsx
+
+Testing framework & tools:
+
+- Vitest
+- React Testing Library
+- jsdom environment
+- MSW for API mocks
+
+General testing rules:
+
+- Follow Arrange → Act → Assert pattern in every test
+- One behavior per test case
+- Use accessible queries only (getByRole, getByLabelText, getByPlaceholderText)
+- Do NOT use class selectors or implementation details
+- Do NOT use snapshot testing
+- Do NOT use arbitrary timeouts
+```
+
+</details>
+
 ---
 
-## 🔟 Container Unit Tests – @container-unit-test
+## 🔟 Container Unit Tests
 
 Tests orchestration logic and cross-component flows.
 
+<details>
+
+<summary>Example `container-unit-test` for UserProfile</summary>
+
+```markdown
+Write unit tests for container "UserProfileContainer"
+which uses components:
+
+- PersonalInfo
+- AddressInfo
+- Preferences
+
+Tests must:
+
+- Use mock data and handlers from each component
+- Cover positive, negative, empty, and edge scenarios
+- Validate edit / submit orchestration
+- Use USE_MOCK_API flag
+- Follow Arrange Act Assert pattern
+```
+
+</details>
+
 ---
 
-## 1️⃣1️⃣ End-to-End Tests – @container-e2e
+## 1️⃣1️⃣ Container End-to-End Tests
 
 Validates real user journeys using Playwright + MSW.
+
+<details>
+
+<summary>Example `container-e2e-test` for UserProfile</summary>
+
+```markdown
+Write end-to-end tests for container "UserProfileContainer"
+which uses components:
+
+- PersonalInfo
+- AddressInfo
+- Preferences
+
+Tests must:
+
+- Use mock data and handlers from each component
+- Cover positive, negative, empty, and edge scenarios
+- Validate edit / submit orchestration
+- Use USE_MOCK_API flag to control mocking
+```
+
+</details>
 
 ---
 
