@@ -409,3 +409,52 @@ Story requirements:
 - Pass all props via args
 - Expose all props in Storybook Controls
 - Use mock data as default args
+
+## Example of @container command
+
+Create container named "UserProfileContainer"
+using the following components:
+
+- PersonalInfo
+- AddressInfo
+- Preferences
+
+The container must:
+
+- Fetch data for all components
+- Coordinate edit / submit flow
+- Maintain component-level state and validity
+- Prevent unnecessary re-renders
+
+## @container-unit-test example
+
+Write unit tests for container "UserProfileContainer"
+which uses components:
+
+- PersonalInfo
+- AddressInfo
+- Preferences
+
+Tests must:
+
+- Use mock data and handlers from each component
+- Cover positive, negative, empty, and edge scenarios
+- Validate edit / submit orchestration
+- Use USE_MOCK_API flag
+- Follow Arrange Act Assert pattern
+
+## @container-e2e example
+
+Write end-to-end tests for container "UserProfileContainer"
+which uses components:
+
+- PersonalInfo
+- AddressInfo
+- Preferences
+
+Tests must:
+
+- Use mock data and handlers from each component
+- Cover positive, negative, empty, and edge scenarios
+- Validate edit / submit orchestration
+- Use USE_MOCK_API flag to control mocking
