@@ -2,7 +2,7 @@
 
 ## ZOD Validation
 
-![Watch the video](https://img.youtube.com/vi/U9PYyMhDc_k/default.jpg)
+[![Watch the video](https://img.youtube.com/vi/U9PYyMhDc_k/default.jpg)][(https://youtu.be/nTQUwghvy5Q](https://www.youtube.com/watch?v=U9PYyMhDc_k))
 
 ## Form Validation
 
