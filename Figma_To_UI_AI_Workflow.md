@@ -23,10 +23,10 @@ Figma UX
 → 2. Validation (Zod)  
 → 3. Component (UI)  
 → 4. Mock Data  
-→ 5. Handlers
+→ 5. Handlers  
 → 6. Stories  
-→ 7. APIs
-→ 8. Containers
+→ 7. APIs  
+→ 8. Containers  
 → 9. Component Unit tests  
 → 10. Container Unit tests  
 → 11. Container E2E tests
