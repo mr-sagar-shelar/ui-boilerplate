@@ -393,3 +393,19 @@ Test requirements:
 - Cover API error scenario
 - Use Playwright + MSW
 - Do not define inline test data
+
+## Example of @story command
+
+Generate Storybook stories for component "UserProfile".
+
+Use:
+
+- Props interface from /packages/contracts/interfaces/UserProfile.ts
+- Mock data from /packages/ui/src/component/UserProfile/UserProfile.mock-data.ts
+
+Story requirements:
+
+- Create stories for valid, invalid, empty, and edge cases
+- Pass all props via args
+- Expose all props in Storybook Controls
+- Use mock data as default args
