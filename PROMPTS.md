@@ -360,6 +360,23 @@ Test requirements:
 - Validate submit and cancel behavior
 - Validate API error handling using mock responses
 
+# Unit test example with handlers and mock flag
+
+Write unit tests for "UserProfileForm".
+
+Use:
+
+- Mock handlers from:
+  /packages/ui/src/component/UserProfile/UserProfile.handlers.ts
+- USE_MOCK_API from config/env
+
+Test requirements:
+
+- Cover positive, negative, empty, and edge scenarios
+- Activate handlers per scenario
+- Follow Arrange Act Assert pattern
+- Skip API tests when USE_MOCK_API is false
+
 ## E2E Example
 
 Write end-to-end tests for "UserProfile" form.
