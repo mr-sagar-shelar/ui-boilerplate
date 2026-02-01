@@ -19,15 +19,17 @@ This document defines the **standard, mandatory sequence** every developer must 
 ## 🧭 High-Level Flow
 
 Figma UX  
-→ Contracts (interfaces)  
-→ Validation (Zod)  
-→ Components (UI)  
-→ Container (orchestration)  
-→ Mock data + handlers  
-→ Stories  
-→ Unit tests  
-→ Container tests  
-→ E2E tests
+→ 1. Contracts (interfaces)  
+→ 2. Validation (Zod)  
+→ 3. Component (UI)  
+→ 4. Mock Data  
+→ 5. Handlers
+→ 6. Stories  
+→ 7. APIs
+→ 8. Containers
+→ 9. Component Unit tests  
+→ 10. Container Unit tests  
+→ 11. Container E2E tests
 
 ---
 
@@ -42,7 +44,7 @@ Defines the data structure for a UI component.
 
 <details>
 
-<summary>Example `component-interface` for UserProfile</summary>
+<summary>Example Prompt For `component-interface`</summary>
 
 ```markdown
 Create component named "UserProfile".
@@ -75,7 +77,7 @@ Generates Zod schema from interface comments.
 
 <details>
 
-<summary>Example `component-validations` for UserProfile</summary>
+<summary>Example Prompt For `component-validations`</summary>
 
 ```markdown
 Generate Zod validation schema for component "UserProfile"
@@ -107,7 +109,7 @@ Creates a pure MUI-based component supporting readonly/editable modes.
 
 <details>
 
-<summary>Example `component-develop` for UserProfile</summary>
+<summary>Example Prompt For `component-develop`</summary>
 
 ```markdown
 Generate UI component for "PersonalInfo".
@@ -139,7 +141,7 @@ Creates canonical mock data for all scenarios of a component.
 
 <details>
 
-<summary>Example `component-mock-data` for UserProfile</summary>
+<summary>Example Prompt For `component-mock-data`</summary>
 
 ```markdown
 Generate mock data for component "UserProfile".
@@ -171,7 +173,7 @@ Creates MSW handlers for mock scenarios.
 
 <details>
 
-<summary>Example `component-handlers` for UserProfile</summary>
+<summary>Example Prompt For `component-handlers`</summary>
 
 ```markdown
 Generate API handlers for component "UserProfile".
@@ -202,7 +204,7 @@ Visualizes all component states using mock data.
 
 <details>
 
-<summary>Example `component-strories` for UserProfile</summary>
+<summary>Example Prompt For `component-strories`</summary>
 
 ```markdown
 Generate Storybook stories for component "UserProfile".
@@ -234,7 +236,7 @@ Generates TanStack Query hooks with caching & pagination.
 
 <details>
 
-<summary>Example `component-api` for UserProfile</summary>
+<summary>Example Prompt For `component-api`</summary>
 
 ```markdown
 Create API hooks for component "UserProfile".
@@ -276,7 +278,7 @@ Orchestrates multiple components, state, edit flow, and submission.
 
 <details>
 
-<summary>Example `container` for UserProfile</summary>
+<summary>Example Prompt For `container`</summary>
 
 ```markdown
 Create container named "UserProfileContainer"
@@ -304,7 +306,7 @@ Tests component behavior using mock data and handlers.
 
 <details>
 
-<summary>Example `component-unit-test` for UserProfile</summary>
+<summary>Example Prompt For `component-unit-test`</summary>
 
 ```markdown
 Write comprehensive unit tests for the "UserProfile" component.
@@ -354,7 +356,7 @@ Tests orchestration logic and cross-component flows.
 
 <details>
 
-<summary>Example `container-unit-test` for UserProfile</summary>
+<summary>Example Prompt For `container-unit-test`</summary>
 
 ```markdown
 Write unit tests for container "UserProfileContainer"
@@ -383,7 +385,7 @@ Validates real user journeys using Playwright + MSW.
 
 <details>
 
-<summary>Example `container-e2e-test` for UserProfile</summary>
+<summary>Example Prompt For `container-e2e-test`</summary>
 
 ```markdown
 Write end-to-end tests for container "UserProfileContainer"
