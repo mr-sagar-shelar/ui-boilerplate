@@ -25,7 +25,7 @@ Follow ALL rules below strictly.
 - The following files MAY exist and should be used as reference:
   - /packages/contracts/interfaces/{COMPONENT_NAME}.ts
   - /packages/contracts/validation/{COMPONENT_NAME}.schema.ts
-  - /packages/ui/src/component/{COMPONENT_NAME}/{COMPONENT_NAME}.form.tsx
+  - /packages/ui/src/component/{COMPONENT_NAME}/{COMPONENT_NAME}.tsx
   - /packages/api/{COMPONENT_NAME}/{COMPONENT_NAME}.api.ts
 - These are the ONLY sources of truth.
 

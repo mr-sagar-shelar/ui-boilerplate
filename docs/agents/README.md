@@ -14,8 +14,7 @@ These agents operate on individual UI components.
 
 - **[component-interface](./component-interface.md)**: Creates the initial TypeScript interface for a component from a high-level description.
 - **[component-validations](./component-validations.md)**: Generates a Zod validation schema from the validation rules defined in the component's interface.
-- **[component-develop](./component-develop.md)**: Develops the React UI component using Material UI, based on the component's interface.
-- **[component-form](./component-form.md)**: Generates a form component using React Hook Form and a Zod schema for validation.
+- **[component-develop](./component-develop.md)**: Develops the React UI component using Material UI, based on the component's interface, including a validation-aware editable mode.
 - **[component-mock-data](./component-mock-data.md)**: Creates mock data for various scenarios (valid, invalid, empty, edge cases).
 - **[component-handlers](./component-handlers.md)**: Generates MSW (Mock Service Worker) handlers for the component's API endpoints.
 - **[component-story](./component-story.md)**: Creates Storybook stories for the component to visualize its different states.
@@ -29,3 +28,4 @@ These agents operate on container components, which orchestrate multiple UI comp
 - **[container](./container.md)**: Creates a container component that manages state and coordinates multiple UI components.
 - **[container-unit-test](./container-unit-test.md)**: Creates unit tests for the container component.
 - **[container-e2e-test](./container-e2e-test.md)**: Creates end-to-end tests for the container's user journeys.
+

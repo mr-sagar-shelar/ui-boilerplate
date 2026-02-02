@@ -34,46 +34,51 @@ You MUST fully implement ONLY this file:
 
 This file MUST:
 
-- Export a single interface named {COMPONENT_NAME}Props
+- Export a single interface named {COMPONENT_NAME}
 - Use strict TypeScript types
 - Mark optional fields with ?
 - Mark readonly fields with readonly
-- Include VALIDATION COMMENTS for every field
+- Include VALIDATION COMMENTS for every field that requires validation.
 
 ──────────────────────────────────────── 3. VALIDATION COMMENT FORMAT (CRITICAL)
 ────────────────────────────────────────
-For EACH interface property, add a structured block comment
-using the following format:
+For EACH interface property that requires validation, add a comment in a direct, machine-readable format.
 
-/\*\*
+**Supported Comment Types**:
+- `@validation [rule] [value] [error message]`
+- `@enum [value1] | [value2] | ...`
+- `@default [value]`
 
-- @validation
-- type: <string | number | boolean | date | datetime | enum | array | object>
-- rules:
-- - <rule-1>
-- - <rule-2>
-    */
+**Rules**:
+- The comment MUST be on the line directly above the property.
+- One rule per line.
 
-Rules MUST be:
+**Examples**:
+```typescript
+/**
+ * @validation required
+ * @validation min 3 Must be at least 3 characters.
+ * @validation max 20 Cannot exceed 20 characters.
+ */
+username: string;
 
-- Human readable
-- Deterministic
-- Mappable to Zod
-- Free of implementation details
+/**
+ * @validation required
+ * @validation email Must be a valid email address.
+ */
+email: string;
 
-Examples of rules:
+/**
+ * @enum admin | editor | viewer
+ */
+role: "admin" | "editor" | "viewer";
 
-- required
-- optional
-- min: 18
-- max: 65
-- email
-- uuid
-- iso-date
-- iso-datetime
-- oneOf: admin | user | analyst
-- regex: ^[0-9]+$
-- lengthMax: 500
+/**
+ * @validation optional
+ * @validation url Must be a valid URL.
+ */
+website?: string;
+```
 
 ──────────────────────────────────────── 4. WHAT NOT TO DO (VERY IMPORTANT)
 ────────────────────────────────────────
@@ -84,7 +89,6 @@ You MUST NOT:
 - Add runtime checks
 - Infer UI behavior
 - Add decorators
-- Add default values
 
 Comments ONLY express intent.
 
@@ -110,11 +114,13 @@ Do NOT implement anything in these files.
 ──────────────────────────────────────── 7. TYPE INFERENCE RULES
 ────────────────────────────────────────
 
-- date → string (ISO 8601 date)
-- datetime → string (ISO 8601 datetime)
-- enum → string literal union
-- array → T[]
-- object → inline object type
+- `Date` for dates and datetimes
+- `string` for text-based types
+- `number` for numerical types
+- `boolean` for true/false flags
+- String literal unions for enums (e.g., `"admin" | "viewer"`)
+- `T[]` for arrays
+- Inline object types for nested objects
 
 ──────────────────────────────────────── 8. OUTPUT RULES (ABSOLUTE)
 ────────────────────────────────────────
